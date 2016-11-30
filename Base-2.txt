@@ -1,0 +1,419 @@
+-- =============================================================================
+-- Diagram Name: modelo
+-- Created on: 01/12/2016 05:46:03 p.m.
+-- Diagram Version: v2.0
+-- =============================================================================
+
+
+CREATE TABLE "clientes" (
+	"cedula" varchar NOT NULL,
+	"contrasena" varchar NOT NULL,
+	"nombre" varchar NOT NULL,
+	"apellido" varchar NOT NULL,
+	"direccion" varchar,
+	"telefono" varchar,
+	"correo" varchar NOT NULL,
+	"sexo" int4 NOT NULL,
+	PRIMARY KEY("cedula")
+);
+
+CREATE TABLE "productos" (
+	"codigo" SERIAL NOT NULL,
+	"codigo_categoria" int4 NOT NULL,
+	"nombre" varchar,
+	"producto" bytea,
+	"descripcion" varchar NOT NULL,
+	"costo" numeric,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "categoria_producto" (
+	"codigo" SERIAL NOT NULL,
+	"nombre" varchar NOT NULL,
+	"descripcion" varchar,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "compras" (
+	"codigo" SERIAL NOT NULL,
+	"fecha" date NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "servicios" (
+	"codigo" SERIAL NOT NULL,
+	"nombre" varchar NOT NULL,
+	"descripcion" varchar NOT NULL,
+	"costo" numeric NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "proyecto" (
+	"codigo" SERIAL NOT NULL,
+	"nombre" varchar NOT NULL,
+	"descripcion" varchar NOT NULL,
+	"fecha_inicio" date NOT NULL,
+	"fecha_fin" date NOT NULL,
+	"estado" int4 NOT NULL DEFAULT 0,
+	"producto" bytea,
+	"costo" numeric,
+	"sobrecosto" numeric,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "empleados" (
+	"cedula" varchar NOT NULL,
+	"nombre" varchar NOT NULL,
+	"apellido" varchar NOT NULL,
+	"direccion" varchar NOT NULL,
+	"telefono" varchar NOT NULL,
+	"correo" varchar NOT NULL,
+	"sexo" varchar NOT NULL,
+	"cargo" varchar NOT NULL,
+	"sueldo" numeric DEFAULT 0,
+	"hoja_de_vida" bytea NOT NULL,
+	"estado" int8 DEFAULT 0,
+	PRIMARY KEY("cedula")
+);
+
+CREATE TABLE "roles" (
+	"codigo" SERIAL NOT NULL,
+	"nombre" varchar NOT NULL,
+	"descripcion" varchar NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "permisos_pagina" (
+	"codigo_fichero" int4 NOT NULL,
+	"codigo_rol" int4 NOT NULL,
+	PRIMARY KEY("codigo_fichero","codigo_rol")
+);
+
+CREATE TABLE "qrs" (
+	"codigo" SERIAL NOT NULL,
+	"cedula_cliente" varchar NOT NULL,
+	"descripcion" varchar NOT NULL,
+	"fecha" date NOT NULL,
+	"tipo" int8 NOT NULL DEFAULT 0,
+	"estado" int4 NOT NULL DEFAULT 0,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "seguimiento_qrs" (
+	"codigo" SERIAL NOT NULL,
+	"codigo_qrs" int4 NOT NULL,
+	"descripcion" varchar NOT NULL,
+	"fecha" date NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "recoleccion_informacion" (
+	"codigo" SERIAL NOT NULL,
+	"codigo_proyecto" int4,
+	"cedula_empleado" varchar NOT NULL,
+	"documentos" bytea,
+	"fecha_de_carga" date,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "riesgos_proyecto" (
+	"codigo" SERIAL NOT NULL,
+	"codigo_proyecto" int4 NOT NULL,
+	"descripcion" varchar NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "actividades" (
+	"codigo" SERIAL NOT NULL,
+	"nombre" varchar NOT NULL,
+	"descripcion" varchar NOT NULL,
+	"fecha_inicio" date NOT NULL,
+	"fecha_fin" date NOT NULL,
+	"estado" int4 NOT NULL DEFAULT 0,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "objetivos_de_proyecto" (
+	"codigo" SERIAL NOT NULL,
+	"codigo_proyecto" int4 NOT NULL,
+	"descripcion" varchar NOT NULL,
+	"tipo" int4 DEFAULT 0,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "actividades_objetivos" (
+	"codigo_actividades" int4 NOT NULL,
+	"codigo_objetivos_de_proyecto" int4 NOT NULL,
+	PRIMARY KEY("codigo_actividades","codigo_objetivos_de_proyecto")
+);
+
+CREATE TABLE "actividades_empleados" (
+	"codigo_actividades" int4 NOT NULL,
+	"cedula_empleado" varchar NOT NULL,
+	PRIMARY KEY("codigo_actividades","cedula_empleado")
+);
+
+CREATE TABLE "reporte_actividad" (
+	"cod_reporte" int4 NOT NULL,
+	"cod_actividad" int4,
+	"reporte" varchar,
+	"fecha_reporte" date,
+	"cedula_empleado" varchar NOT NULL,
+	PRIMARY KEY("cod_reporte")
+);
+
+CREATE TABLE "roles_empleados" (
+	"codigo_rol" int4 NOT NULL,
+	"cedula_empleado" varchar NOT NULL,
+	PRIMARY KEY("codigo_rol","cedula_empleado")
+);
+
+CREATE TABLE "proyecto_servicios" (
+	"codigo_servicio" int4 NOT NULL,
+	"codigo_proyecto" int4 NOT NULL,
+	"cantidad" int4 DEFAULT 1,
+	"descuento" int4 DEFAULT 0,
+	PRIMARY KEY("codigo_servicio","codigo_proyecto")
+);
+
+CREATE TABLE "proyecto_clientes" (
+	"codigo_proyecto" int4 NOT NULL,
+	"cedula_cliente" varchar NOT NULL,
+	"grado_representacion" numeric,
+	PRIMARY KEY("codigo_proyecto","cedula_cliente")
+);
+
+CREATE TABLE "inicio_labor" (
+	"fecha_inicio" date NOT NULL,
+	"cedula_empleado" varchar NOT NULL,
+	PRIMARY KEY("fecha_inicio","cedula_empleado")
+);
+
+CREATE TABLE "fin_labor" (
+	"fecha_fin" date NOT NULL,
+	"cedula_empleado" varchar NOT NULL,
+	PRIMARY KEY("fecha_fin","cedula_empleado")
+);
+
+CREATE TABLE "ficheros" (
+	"codigo" SERIAL NOT NULL,
+	"nombre" varchar NOT NULL,
+	"descripcion" varchar NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+CREATE TABLE "clientes_compras" (
+	"cedula_cliente" varchar NOT NULL,
+	"codigo_compra" int4 NOT NULL,
+	"grado_representacion" numeric NOT NULL,
+	PRIMARY KEY("cedula_cliente","codigo_compra")
+);
+
+CREATE TABLE "productos_compras" (
+	"codigo_producto" int4 NOT NULL,
+	"codigo_compra" int4 NOT NULL,
+	"cantidad" numeric,
+	"descuento" numeric,
+	PRIMARY KEY("codigo_producto","codigo_compra")
+);
+
+CREATE TABLE "mensajes" (
+	"codigo" SERIAL NOT NULL,
+	"nombre" varchar NOT NULL,
+	"correo" varchar NOT NULL,
+	"mensaje" varchar NOT NULL,
+	"fecha" date NOT NULL,
+	PRIMARY KEY("codigo")
+);
+
+
+ALTER TABLE "productos" ADD CONSTRAINT "ref_prod_cat" FOREIGN KEY ("codigo_categoria")
+	REFERENCES "categoria_producto"("codigo")
+	MATCH SIMPLE
+	ON DELETE SET DEFAULT
+	ON UPDATE CASCADE
+	NOT DEFERRABLE;
+
+ALTER TABLE "permisos_pagina" ADD CONSTRAINT "ref_rol_per" FOREIGN KEY ("codigo_rol")
+	REFERENCES "roles"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "permisos_pagina" ADD CONSTRAINT "Ref_permisos_pagina_to_ficheros" FOREIGN KEY ("codigo_fichero")
+	REFERENCES "ficheros"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "qrs" ADD CONSTRAINT "Ref_qrs_clientes" FOREIGN KEY ("cedula_cliente")
+	REFERENCES "clientes"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "seguimiento_qrs" ADD CONSTRAINT "Ref_seguimiento_qrs_to_qrs" FOREIGN KEY ("codigo_qrs")
+	REFERENCES "qrs"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "recoleccion_informacion" ADD CONSTRAINT "ref_sol_info" FOREIGN KEY ("codigo_proyecto")
+	REFERENCES "proyecto"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "recoleccion_informacion" ADD CONSTRAINT "ref_emp_reco" FOREIGN KEY ("cedula_empleado")
+	REFERENCES "empleados"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "riesgos_proyecto" ADD CONSTRAINT "ref_sol_riesgos" FOREIGN KEY ("codigo_proyecto")
+	REFERENCES "proyecto"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "objetivos_de_proyecto" ADD CONSTRAINT "ref_sol_obj" FOREIGN KEY ("codigo_proyecto")
+	REFERENCES "proyecto"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "actividades_objetivos" ADD CONSTRAINT "ref_cro_act" FOREIGN KEY ("codigo_actividades")
+	REFERENCES "actividades"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "actividades_objetivos" ADD CONSTRAINT "ref_obj_cro" FOREIGN KEY ("codigo_objetivos_de_proyecto")
+	REFERENCES "objetivos_de_proyecto"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "actividades_empleados" ADD CONSTRAINT "ref_cro_cro_acti" FOREIGN KEY ("codigo_actividades")
+	REFERENCES "actividades"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "actividades_empleados" ADD CONSTRAINT "ref_emp_cro" FOREIGN KEY ("cedula_empleado")
+	REFERENCES "empleados"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "reporte_actividad" ADD CONSTRAINT "ref_repor_cro" FOREIGN KEY ("cod_actividad")
+	REFERENCES "actividades"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "reporte_actividad" ADD CONSTRAINT "ref_emp_reporte" FOREIGN KEY ("cedula_empleado")
+	REFERENCES "empleados"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "roles_empleados" ADD CONSTRAINT "ref_rol_emp" FOREIGN KEY ("codigo_rol")
+	REFERENCES "roles"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "roles_empleados" ADD CONSTRAINT "ref_emp_rol" FOREIGN KEY ("cedula_empleado")
+	REFERENCES "empleados"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "proyecto_servicios" ADD CONSTRAINT "ref_serv_proy" FOREIGN KEY ("codigo_servicio")
+	REFERENCES "servicios"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "proyecto_servicios" ADD CONSTRAINT "ref_proy_serv" FOREIGN KEY ("codigo_proyecto")
+	REFERENCES "proyecto"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "proyecto_clientes" ADD CONSTRAINT "ref_clientes_proy" FOREIGN KEY ("codigo_proyecto")
+	REFERENCES "proyecto"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "proyecto_clientes" ADD CONSTRAINT "ref_proy_clientes" FOREIGN KEY ("cedula_cliente")
+	REFERENCES "clientes"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "inicio_labor" ADD CONSTRAINT "ref_emp_ini_labor" FOREIGN KEY ("cedula_empleado")
+	REFERENCES "empleados"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "fin_labor" ADD CONSTRAINT "ref_emp_fin_labor" FOREIGN KEY ("cedula_empleado")
+	REFERENCES "empleados"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "clientes_compras" ADD CONSTRAINT "ref_clientes_compras" FOREIGN KEY ("cedula_cliente")
+	REFERENCES "clientes"("cedula")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "clientes_compras" ADD CONSTRAINT "ref_compras_clientes" FOREIGN KEY ("codigo_compra")
+	REFERENCES "compras"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "productos_compras" ADD CONSTRAINT "ref_prod_compras" FOREIGN KEY ("codigo_producto")
+	REFERENCES "productos"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+ALTER TABLE "productos_compras" ADD CONSTRAINT "ref_compras_prod" FOREIGN KEY ("codigo_compra")
+	REFERENCES "compras"("codigo")
+	MATCH SIMPLE
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+	NOT DEFERRABLE;
+
+
