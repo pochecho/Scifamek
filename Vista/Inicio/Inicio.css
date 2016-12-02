@@ -1,0 +1,18 @@
+#menuPrincipal{ background-color: dodgerblue;
+                height: 40px; color:black; border-radius:0px 0px 10px 10px; font-family: "verdana", "arial";
+                font-weight:700}
+
+#menuPrincipal ul{ margin-left:10%}
+
+#menuPrincipal a{color: white;} 
+
+#menuPrincipal li a:hover{background:transparent; color: dodgerblue;  }
+
+#menuPrincipal ul li {margin-top:0px; vertical-align: middle; border-left: 1px solid dodgerblue;}
+#menuPrincipal ul li:hover {margin-top:0px; height: 30px; background-color: white;}
+
+/*#menuFunEsp{background-color: green; min-height: 600px;}*/
+
+#contenido{background-color: white; min-height: 500px; } /*box-shadow:0px 0px 10px 3px inset*/
+
+#piePagina{background-color: black; height: 80px; border-radius:10px 10px 0px 0px}
