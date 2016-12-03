@@ -13,7 +13,7 @@ class Conexion {
         // estas constantes se utilizan tanto en vista como en modelo, por lo tanto se definen una vez y se utilizan N veces (nada de duplicar código)
 
         try {
-            $this->pdo = new PDO("pgsql:host=localhost;port=5432;dbname = sciv2; user = postgres; password =sergioesgay");
+            $this->pdo = new PDO("pgsql:host=localhost;port=5432;dbname = scifamek; user = postgres; password =sergioesgay");
             } catch (PDOException $e) {
             error_log(utf8_encode($e));
             throw new Exception('No se pudo establecer la conexión con la base de datos', $e->getCode());

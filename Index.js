@@ -29,7 +29,11 @@ $(document).ready(function ()
         })
     })  // fin de $("#index-menu-superior li a").each(function () {...})
 
-    function redirigir(destino, url) {
+   
+});   
+
+
+function redirigir(destino, url) {
         params = {
             destino: destino
         };
@@ -52,5 +56,3 @@ $(document).ready(function ()
                 });
 
     }
-
-});   
