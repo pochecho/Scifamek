@@ -1,10 +1,10 @@
 <?php
 include 'General.php';
-class Cliente extends General {
+class Empleado extends General {
 
     function loguear($params) {
         extract($params);
-        $consulta = "SELECT * FROM clientes where correo = '" . $parametros['usuario'] . "' and  contrasena = '" . md5($parametros['contrasena']) . "'";
+        $consulta = "SELECT * FROM empleado where correo = '" . $parametros['usuario'] . "' and  contrasena = '" . md5($parametros['contrasena']) . "'";
         $cadena = $this->consultar($conexion, $consulta);
         $this->crearSesion($cadena);
         echo json_encode(count($cadena));
@@ -18,8 +18,12 @@ class Cliente extends General {
         $_SESSION['direccion'] = $usu[4];
         $_SESSION['telefono'] = $usu[5];
         $_SESSION['correo'] = $usu[6];
-        $_SESSION['sexo'] = $usu[7];
-        $_SESSION['rol'] = 5;
+        $_SESSION['genero'] = $usu[7];
+        
+        $consulta = "SELECT codigo_rol FROM roles_empleados where cedula_empleado = '" . $parametros['cedula'] . "'";
+        $cadena = $this->consultar($conexion, $consulta);
+        error_log($cadena[0][0]."<-rol");
+        $_SESSION['rol'] = $cadena[0][0];
     }
 
     

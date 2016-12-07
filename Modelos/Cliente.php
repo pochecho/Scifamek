@@ -19,7 +19,7 @@ class Cliente extends General {
         $_SESSION['telefono'] = $usu[5];
         $_SESSION['correo'] = $usu[6];
         $_SESSION['sexo'] = $usu[7];
-        $_SESSION['rol'] = 5;
+        $_SESSION['rol'] = 8;
     }
 
     

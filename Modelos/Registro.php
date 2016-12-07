@@ -11,7 +11,7 @@ class Registro {
     function registrarCliente($params) {
         extract($params);
         //cedula, nombre, apellido, direccion, telefono, correo, sexo
-        $consulta = "INSERT INTO clientes (cedula, nombre, apellido, direccion, telefono, correo, sexo) VALUES ( " . $parametros['cedula'] . ",'".$parametros['nombre']."','".$parametros['apellido'].
+        $consulta = "INSERT INTO clientes (cedula,contrasena, nombre, apellido, direccion, telefono, correo, sexo) VALUES ( '" . $parametros['cedula'] . "','".md5($parametros['contrasena'])."','".$parametros['nombre']."','".$parametros['apellido'].
                 "','".$parametros['direccion'] . "','".$parametros['telefono'] . "','".$parametros['correo'] . "','".$parametros['sexo']."')";
         
         error_log($consulta);
