@@ -22,11 +22,12 @@ class PaginasPermiso extends General {
             $consulta = "SELECT f.nombre FROM permisos_pagina p, ficheros f where p.codigo_rol = " . $_SESSION['rol'] .
                     " and p.codigo_fichero = f.codigo";
             $cadena = $this->consultar($conexion, $consulta);
+        } else {
+            $consulta = "SELECT f.nombre FROM permisos_pagina p, ficheros f where p.codigo_rol = 9" .
+                    " and p.codigo_fichero = f.codigo";
+            $cadena = $this->consultar($conexion, $consulta);
         }
-        $consulta = "SELECT f.nombre FROM permisos_pagina p, ficheros f where p.codigo_rol = 6" .
-                " and p.codigo_fichero = f.codigo";
-        $cadena2 = $this->consultar($conexion, $consulta);
-        $cadena = $this->unir($cadena, $cadena2);
+        error_log(($cadena));
         echo json_encode(($cadena));
     }
 

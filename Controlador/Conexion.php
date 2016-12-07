@@ -18,6 +18,7 @@ class Conexion {
             error_log(utf8_encode($e));
             throw new Exception('No se pudo establecer la conexión con la base de datos', $e->getCode());
         }
+        
     }
 
     public function getPDO() {
