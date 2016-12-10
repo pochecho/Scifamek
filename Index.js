@@ -1,5 +1,6 @@
 $(document).ready(function ()
 {
+   
     // un ejemplo de uso de selectores jQuery para controlar eventos sobre links
     $("#main-menu li a").each(function () {
         var opcion = $(this).text();
@@ -28,12 +29,11 @@ $(document).ready(function ()
                             {clase: "Sesion", metodo: "salir", params: ""},
                             function (r) {
                                 redirigir("Inicio.html", "Vista/Inicio/Inicio.html");
-
-
+                                document.location.reload();
                             });
                     break;
                 default:
-                    alert('La opción <' + opcion + '> no está disponible');
+//                    alert('La opción <' + opcion + '> no está disponible');
             }
             event.preventDefault();
         })
@@ -50,14 +50,14 @@ $(document).ready(function ()
                 {clase: "Sesion", metodo: "validarSesion", params: ""},
                 function (r) {
                     r = JSON.parse(r);
-alert("Este es el "+r);
                     if (r.length === 0) {
                         console.log("No hpta");
                     } else {
                         if (r["rol"] == 8) {
                             redimensionar("Vista/Anexos/MenuCliente.html");
+                        } else if (r["rol"] == 10) {
+                            redimensionar("Vista/Anexos/MenuEmpleado.html");
                         }
-                        console.log(r);
                         //redimensionar();
                     }
 
@@ -71,8 +71,6 @@ alert("Este es el "+r);
                 function (r) {
                     t = false;
                     r = JSON.parse(r);
-
-
                     for (i = 0; i < r.length; i++) {
                         if (r[i] + ".html" == destino) {
                             t = true;
@@ -83,33 +81,52 @@ alert("Este es el "+r);
                         window.localStorage.setItem("url", url);
                         $("#contenido").load(url);
                     } else {
-                        alert("No tiene permiso para ingresar a esta pagina");
+                        enviarNoticia("No tiene permiso para ingresar a esta página", "error");
                     }
                 });
     });
 
 
+
 });
 
 
+function enviarNoticia(mensaje, tipo) {
+    $("#noticias").append($("<p>" + mensaje + "<p>"));
+    cadena = "border-radius: 0px 0px 10px 10px; color: white; padding-top:5px;";
 
+    if (tipo == "exito") {
+        $("#noticias").attr("style", cadena + "background: #4CAF50; ");
+    } else {
+        if (tipo == "error") {
+            $("#noticias").attr("style", cadena + "background: #ff9c55;");
+        }
+    }
+
+    function show_popup() {
+        $("#noticias").empty();
+        $("#noticias").attr("style", "padding-top: 0px");
+    }
+    ;
+    window.setTimeout(show_popup, 2000); // 5 seconds
+
+
+}
 //onbeforeunload
 
 function redirigir(destino, url) {
     params = {
         destino: destino
     };
-    archivoActual = window.location.pathname;
     $.post("Controlador/Controlador.php",
             {clase: "PaginasPermiso", metodo: "obtenerPaginasPermiso", parametros: params},
             function (r) {
                 t = false;
                 r = JSON.parse(r);
-
-
                 for (i = 0; i < r.length; i++) {
                     if (r[i] + ".html" == destino) {
                         t = true;
+                        break;
                     }
                 }
                 if (t) {
@@ -117,7 +134,7 @@ function redirigir(destino, url) {
                     window.localStorage.setItem("url", url);
                     $("#contenido").load(url);
                 } else {
-                    alert("No tiene permiso para ingresar a esta pagina");
+                    enviarNoticia("No tiene permiso para ingresar a esta página", "error");
                 }
             });
 

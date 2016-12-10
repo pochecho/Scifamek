@@ -9,24 +9,25 @@ function ingresar() {
             {clase: "Cliente", metodo: "loguear", parametros: params},
             function (r) {
                 r = JSON.parse(r);
-                if (r == 0) {
+                    if (r == 0) {
                     $.post("Controlador/Controlador.php",
                             {clase: "Empleado", metodo: "loguear", parametros: params},
-                            function (r) {
-                                r = JSON.parse(r);
-                                if (r == 0) {
-                                    console.log("No hpta");
+                            function (t)
+                            {
+                                t = JSON.parse(t);
+                                if (t == 0) {
+                                    console.log("No hpta 3");
                                 } else {
-                                    redimensionar();
-                                    $("#contenido").load('Vista/Inicio/Inicio.html');
+                                    redimensionar("Vista/Anexos/MenuEmpleado.html");
+                                    redirigir("Inicio.html","Vista/Inicio/Inicio.html");
                                 }
 
                             });
                 } else {
-
-
-                    redimensionar();
-                    $("#contenido").load('Vista/Inicio/Inicio.html');
+                    
+                    
+                    redimensionar("Vista/Anexos/MenuCliente.html");
+                    redirigir("Inicio.html",'Vista/Inicio/Inicio.html');
                 }
 
             });

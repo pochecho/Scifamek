@@ -3,14 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Modelos/PaginasPermiso.php</file>
-            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Index.js</file>
-            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Vista/Anexos/MenuCliente.html</file>
-            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Modelos/Registro.php</file>
-            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Vista/Registro/Ingreso.html</file>
+            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Vista/Inicio/Inicio.css</file>
+            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Vista/Solicitudes/Solicitudes.html</file>
+            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Vista/Solicitud/Solicitud.html</file>
             <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Controlador/log.txt</file>
-            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Modelos/Sesion.php</file>
+            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Vista/Proyectos/Proyectos.js</file>
+            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Modelos/Proyectos.php</file>
             <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Index.html</file>
+            <file>file:/C:/xampp/htdocs/Scifamek/Scifamek/Vista/Proyectos/DetallesProyecto.js</file>
         </group>
     </open-files>
 </project-private>
