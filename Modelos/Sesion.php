@@ -2,21 +2,21 @@
 
 class Sesion {
 
-    public function obtenerPaginasPorRoles($params) {
-         extract($params);
-        $consulta = "SELECT * FROM clientes where correo = '" . $parametros['usuario'] . "' and  contrasena = '" . md5($parametros['contrasena']) . "'";
-        $cadena = $this->consultar($conexion, $consulta);
-        $this->crearSesion($cadena);
-        echo json_encode(count($cadena));
+ 
+    public function validarSesion() {
+        echo json_encode(($_SESSION));
     }
-    
-    public function validarSesion(){
-        echo json_encode(isset($_SESSION));
+
+    public function salir() {
+        unset($_SESSION['cedula']);
+        unset($_SESSION['nombre']);
+        unset($_SESSION['apellido']);
+        unset($_SESSION['direccion']);
+        unset($_SESSION['telefono']);
+        unset($_SESSION['correo']);
+        unset($_SESSION['genero']);
+        unset($_SESSION['rol']);
+
     }
-    
-    public function salir(){
-        error_log("Ingenierios ".$_SESSION["rol"]);
-        unset($_SESSION);
-        error_log("Ingenierios ".$_SESSION["rol"]);
-    }
+
 }

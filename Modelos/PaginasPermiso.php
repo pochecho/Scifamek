@@ -27,7 +27,6 @@ class PaginasPermiso extends General {
                     " and p.codigo_fichero = f.codigo";
             $cadena = $this->consultar($conexion, $consulta);
         }
-        error_log(($cadena));
         echo json_encode(($cadena));
     }
 
